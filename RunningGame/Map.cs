@@ -9,6 +9,12 @@ namespace RunningGame
 {
     class Map
     {
+        #region Const
+        private const int SmallRockNumber = 1;
+
+        private const int EarthNumber = 0;
+        #endregion
+
         #region Map size
         /// <summary>
         /// Map Width 
@@ -58,6 +64,7 @@ namespace RunningGame
             }
         }
         #endregion
+        private bool canPutRock;
         private Random r = new Random();
         public void Generate()
         {
@@ -70,6 +77,20 @@ namespace RunningGame
                 }                                
             }
             var randomValue = r.Next() % Patterns.Count;
+            if (randomValue == SmallRockNumber)
+            {
+                if (!canPutRock)
+                {
+                    randomValue = EarthNumber;
+                    canPutRock = true;
+                }
+                else
+                {
+                    canPutRock = false;
+                }
+            }
+            
+
             for (int i = 0; i < Height; i++)
             {
                 newView[i, Width - 1] = Patterns[randomValue][i, 0];
